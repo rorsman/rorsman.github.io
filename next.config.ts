@@ -4,7 +4,10 @@ const nextConfig: NextConfig = {
     output: "export",
     basePath: "/rorsman.github.io",
     reactStrictMode: true,
-    assetPrefix: "./"
+    assetPrefix: "./",
+    images: {
+        unoptimized: true
+    }
 };
 
 export default nextConfig;

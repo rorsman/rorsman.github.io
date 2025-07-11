@@ -1,4 +1,7 @@
 import Head from 'next/head';
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import Content from "@/components/content";
 
 export default function Home() {
     return (
@@ -7,8 +10,9 @@ export default function Home() {
                 <title>RORSMAN</title>
             </Head>
             <main>
-                <h1>THIS IS THE BEGINNING</h1>
-                <p>More can be done in <code>pages/index.tsx</code>.</p>
+                <Navbar />
+                <Content />
+                <Footer />
             </main>
         </>
     );
