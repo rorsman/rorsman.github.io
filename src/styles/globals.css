@@ -19,6 +19,7 @@ main, .content {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  @apply max-w-3xl mx-auto px-4
 }
 
 h1 {
@@ -29,3 +30,6 @@ h1 {
   text-overflow: ellipsis;
 }
 
+.terminal-box {
+  @apply bg-black text-green-500 font-mono p-4 rounded mb-14 w-full max-w-3xl mx-auto;
+}

@@ -1,8 +1,12 @@
 import Head from 'next/head';
 import {useState} from 'react';
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
-import Content from "@/components/content";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Title from "@/components/Title";
+import About from "@/components/About";
+import GithubRepos from "@/components/GithubRepos";
+import Skills from "@/components/Skills";
+import BackToTopButton from "@/components/BackToTopButton";
 
 export default function Home() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -16,9 +20,13 @@ export default function Home() {
             </Head>
             <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} scrolled={scrolled} setScrolled={setScrolled}/>
             <main
-                className={`transition-all ${menuOpen ? 'duration-400 ease' : 'duration-800 ease-in'} ${!scrolled && menuOpen ? 'mt-48' : ''}`}>
-                <Content/>
+                className={`transition-all ${menuOpen ? 'duration-400 ease' : 'duration-600 ease-in'} ${!scrolled && menuOpen ? 'mt-48' : ''}`}>
+                <Title/>
+                <About/>
+                <GithubRepos username={"rorsman"}/>
+                <Skills/>
                 <Footer/>
+                <BackToTopButton scrolled={scrolled}/>
             </main>
         </>
     );
