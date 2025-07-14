@@ -3,6 +3,14 @@ import React, {useEffect} from 'react';
 import Link from "next/link";
 import {Bebas_Neue} from "next/font/google";
 
+function scrollToSection(selector: string, offset: number = -80) {
+    const section = document.querySelector(selector);
+    if (section) {
+        const y = section.getBoundingClientRect().top + window.pageYOffset + offset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+}
+
 interface NavbarProps {
     menuOpen: boolean;
     setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +52,7 @@ export default function Navbar({menuOpen, setMenuOpen, scrolled, setScrolled}: R
                                 href=""
                                 scroll={false}
                                 onClick={() => {
-                                    document.querySelector('#about')?.scrollIntoView({behavior: 'smooth'});
+                                    scrollToSection('#about');
                                     setMenuOpen(false);
                                 }}
                             >
@@ -56,7 +64,7 @@ export default function Navbar({menuOpen, setMenuOpen, scrolled, setScrolled}: R
                                 href=""
                                 scroll={false}
                                 onClick={() => {
-                                    document.querySelector('#projects')?.scrollIntoView({behavior: 'smooth'});
+                                    scrollToSection("#projects")
                                     setMenuOpen(false);
                                 }}
                             >
@@ -68,7 +76,7 @@ export default function Navbar({menuOpen, setMenuOpen, scrolled, setScrolled}: R
                                 href=""
                                 scroll={false}
                                 onClick={() => {
-                                    document.querySelector('#skills')?.scrollIntoView({behavior: 'smooth'});
+                                    scrollToSection('#skills');
                                     setMenuOpen(false);
                                 }}
                             >
