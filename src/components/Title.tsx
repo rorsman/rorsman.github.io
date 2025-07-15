@@ -7,12 +7,12 @@ const sixtyFour = Sixtyfour({
 });
 
 export default function Title() {
-    return <div className="mb-14">
+    return <div className="title-container">
         <Image
-            className="mx-auto h-48 rounded-full"
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/sentiment_extremely_dissatisfied.svg`}
+            className="title-image"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/terminal.svg`}
             alt=""
         />
-        <h1 className={sixtyFour.className}>I WRITE CODE</h1>
+        <h1 className={`${sixtyFour.className} title-heading`}>I WRITE CODE</h1>
     </div>
 };

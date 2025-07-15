@@ -33,3 +33,137 @@ h1 {
 .terminal-box {
   @apply bg-black text-green-500 font-mono p-4 rounded mb-14 w-full max-w-3xl mx-auto;
 }
+
+.navbar-button {
+  @apply text-white cursor-pointer;
+}
+
+.navbar-button:hover {
+  text-shadow:
+    1px 1px 0 green,
+    -1px -1px 0 green,
+    1px -1px 0 green,
+    -1px 1px 0 green;
+}
+
+.navbar-list {
+  @apply flex flex-col items-end gap-2 px-4 pb-4 text-3xl;
+}
+
+.navbar {
+  @apply fixed w-full top-0 z-50 text-white px-4 py-3;
+  transition: all 0.3s;
+}
+
+.navbar-open {
+  transition-duration: 100ms;
+  transition-timing-function: linear;
+}
+
+.navbar-closed {
+  transition-duration: 700ms;
+  transition-timing-function: ease-in;
+}
+
+
+.navbar-scrolled {
+  @apply bg-green-500;
+}
+
+.navbar-transparent {
+  @apply bg-transparent;
+}
+
+.navbar-container {
+  @apply flex justify-between items-center;
+}
+
+.navbar-inner {
+  @apply w-full;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.navbar-toggle {
+  @apply flex justify-end p-2;
+}
+
+.navbar-toggle-button {
+  @apply text-2xl;
+}
+
+.error-message {
+  @apply flex items-center gap-2 text-red-500 font-mono;
+}
+
+.repo-command-line {
+  @apply flex items-center gap-2 mb-2 font-mono;
+}
+
+.repo-entry {
+  @apply flex gap-2 mb-2;
+}
+
+.repo-link {
+  @apply hover:underline font-bold;
+}
+
+.skill-section {
+  @apply mb-4;
+}
+
+.skill-section-title {
+  @apply mb-2;
+}
+
+.skill-grid {
+  @apply flex flex-wrap gap-4;
+}
+
+.skill-item {
+  @apply flex flex-col items-center text-center w-24;
+}
+
+.skill-name {
+  @apply text-sm mt-1;
+}
+
+.back-to-top-button {
+  @apply fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-lg;
+}
+
+.back-to-top-button-label {
+  @apply inline-flex items-center gap-1;
+}
+
+.footer {
+  @apply flex justify-center gap-6 py-6;
+}
+
+.footer-icon {
+  @apply h-12 rounded-full border-2 border-transparent hover:border-green-500;
+}
+
+.loading-spinner {
+  @apply flex items-center justify-center h-32;
+}
+
+.loading-spinner-icon {
+  @apply w-8 h-8 animate-spin text-gray-200 dark:text-gray-600 fill-green-500;
+}
+
+.title-container {
+  @apply mb-14;
+}
+
+.title-image {
+  @apply mx-auto h-48 rounded-full;
+}
+
+.title-heading {
+  @apply text-center text-8xl font-extrabold mt-4;
+}
+
+.section-header {
+  @apply text-xl font-bold text-green-500 border-b border-green-700 mb-4 uppercase tracking-wide;
+}

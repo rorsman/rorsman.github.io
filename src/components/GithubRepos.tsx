@@ -1,73 +1,87 @@
 'use client';
 
-import {useEffect, useState} from 'react';
-import LoadingSpinner from "@/components/LoadingSpinner";
-import SectionHeader from "@/components/SectionHeader";
-import { FaGitAlt } from "react-icons/fa";
-
-const GithubRepos: React.FC<Props> = ({username}) => {
-    const [repos, setRepos] = useState<Repo[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchRepos = async () => {
-            const res = await fetch(`https://api.github.com/users/${username}/repos`);
-            const data = await res.json();
-            console.log(data);
-            setRepos(data);
-            setLoading(false);
-        };
-
-        fetchRepos();
-    }, [username]);
-
-    const sectionHeader = <SectionHeader>{"Projects"}</SectionHeader>
-
-    if (loading) return (
-        <div className="terminal-box">
-            {sectionHeader}
-            <LoadingSpinner/>
-        </div>
-    );
-
-    return (
-        <div className="terminal-box" id="projects">
-            {sectionHeader}
-            <div className="flex items-center gap-2 mb-2 font-mono">
-                <span>{'➜ ~ ls -l github.com/rorsman | awk \'{print "'}</span>
-                <FaGitAlt className="inline" color="text-green-500" size={16} />
-                <span>{' " $9 " - " $10}\''}</span>
-            </div>
-            {repos.map((repo) => (
-                <div key={repo.id} className="flex gap-2">
-                    <FaGitAlt color={"white"} size={"24"} />
-                    <p>
-                        <a
-                            href={repo.html_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:underline font-bold"
-                        >
-                            {repo.name}
-                        </a> - {repo.description}
-                    </p>
-                </div>
-            ))}
-        </div>
-    );
-};
+import { useEffect, useState } from 'react';
+import { FaGitAlt } from 'react-icons/fa';
+import { TbFaceIdError } from 'react-icons/tb';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import SectionHeader from '@/components/SectionHeader';
 
 type Repo = {
     id: number;
     name: string;
     html_url: string;
     description: string;
-    created_at: string;
-    size: number;
 };
 
 type Props = {
     username: string;
 };
 
-export default GithubRepos;
+export default function GithubRepos({ username }: Readonly<Props>) {
+    const [repos, setRepos] = useState<Repo[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        async function fetchRepos() {
+            try {
+                const res = await fetch(`https://api.github.com/users/${username}/repos`);
+                if (!res.ok) throw new Error(`Status: ${res.status}`);
+                const data = await res.json();
+                setRepos(data);
+            } catch (err) {
+                console.error("Repo fetch error:", err);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchRepos();
+    }, [username]);
+
+    if (loading) {
+        return (
+            <div className="terminal-box">
+                <SectionHeader>Projects</SectionHeader>
+                <LoadingSpinner />
+            </div>
+        );
+    }
+
+    return (
+        <div className="terminal-box" id="projects">
+            <SectionHeader>Projects</SectionHeader>
+
+            <div className="repo-command-line">
+                <span>{'➜ ~ ls -l github.com/rorsman | awk \'{print "'}</span>
+                <FaGitAlt className="inline" size={16} />
+                <span>{'" $9 " - " $10}\''}</span>
+            </div>
+
+            {error ? (
+                <div className="error-message">
+                    <TbFaceIdError size={24} />
+                    <span>Failed to load projects. Please try again later.</span>
+                </div>
+            ) : (
+                repos.map(({ id, name, html_url, description }) => (
+                    <div key={id} className="repo-entry">
+                        <FaGitAlt size={24} color="white" />
+                        <p>
+                            <a
+                                href={html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="repo-link"
+                            >
+                                {name}
+                            </a>
+                            {description ? ` - ${description}` : ''}
+                        </p>
+                    </div>
+                ))
+            )}
+        </div>
+    );
+}

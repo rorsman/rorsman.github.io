@@ -1,88 +1,97 @@
 'use client';
-import React, {useEffect} from 'react';
-import Link from "next/link";
-import {Bebas_Neue} from "next/font/google";
+import React, { useEffect } from 'react';
+import { Bebas_Neue } from 'next/font/google';
 
-function scrollToSection(selector: string, offset: number = -80) {
-    const section = document.querySelector(selector);
-    if (section) {
-        const y = section.getBoundingClientRect().top + window.pageYOffset + offset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-}
+const DEFAULT_OFFSET = -80;
+
+const navItems = [
+    { label: 'About', selector: '#about', offset: DEFAULT_OFFSET - 200 },
+    { label: 'Projects', selector: '#projects', offset: DEFAULT_OFFSET },
+    { label: 'Skills', selector: '#skills', offset: DEFAULT_OFFSET },
+];
+
+const bebasNeue = Bebas_Neue({
+    weight: '400',
+    subsets: ['latin'],
+    fallback: ['sans'],
+});
 
 interface NavbarProps {
     menuOpen: boolean;
-    setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setMenuOpenAction: React.Dispatch<React.SetStateAction<boolean>>;
     scrolled: boolean;
-    setScrolled: React.Dispatch<React.SetStateAction<boolean>>;
+    setScrolledAction: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const bebasNeue = Bebas_Neue({
-    weight: "400",
-    subsets: ["latin"],
-    fallback: ["sans"]
-});
+const scrollToSection = (selector: string, offset: number, scrolled: boolean) => {
+    const section = document.querySelector<HTMLElement>(selector);
+    if (!section) return;
 
-export default function Navbar({menuOpen, setMenuOpen, scrolled, setScrolled}: Readonly<NavbarProps>) {
+    const adjustedOffset = scrolled ? DEFAULT_OFFSET : offset;
+    const targetY = section.offsetTop + adjustedOffset;
 
+    window.scrollTo({ top: Math.max(targetY, 0), behavior: 'smooth' });
+};
 
-    useEffect(() => {
-        const onScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+export default function Navbar({
+                                   menuOpen,
+                                   setMenuOpenAction,
+                                   scrolled,
+                                   setScrolledAction,
+                               }: Readonly<NavbarProps>) {
+useEffect(() => {
+    const handleScroll = () => setScrolledAction(window.scrollY > 50);
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            setMenuOpenAction(false);
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('keydown', handleKeyDown);
+    };
+}, [setScrolledAction, setMenuOpenAction]);
+
+    const navbarClasses = [
+        'navbar',
+        menuOpen ? 'navbar-open' : 'navbar-closed',
+        scrolled || menuOpen ? 'navbar-scrolled' : 'navbar-transparent',
+    ].join(' ');
 
     return (
-        <nav
-            className={`fixed w-full top-0 z-50 transition ${menuOpen ? 'duration-100 ease' : 'duration-700 ease-in'} ${scrolled || menuOpen ? 'bg-green-500' : 'bg-transparent'} text-white px-4 py-3`}>
-            <div className="flex justify-between items-center">
-                <div className="w-full transition-all duration-600 ease overflow-hidden"
-                     style={{maxHeight: menuOpen ? '500px' : '3rem'}}>
-                    <div className="flex justify-end p-2">
-                        <button className="text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
+        <nav className={navbarClasses}>
+            <div className="navbar-container">
+                <div
+                    className="navbar-inner"
+                    style={{ maxHeight: menuOpen ? '500px' : '3rem' }}
+                >
+                    <div className="navbar-toggle">
+                        <button
+                            className="navbar-toggle-button"
+                            onClick={() => setMenuOpenAction(!menuOpen)}
+                        >
                             {menuOpen ? '✕' : '☰'}
                         </button>
                     </div>
-                    <ul className={`flex flex-col items-end gap-2 px-4 pb-4 text-white text-3xl ${bebasNeue.className}`}>
-                        <li>
-                            <Link
-                                href=""
-                                scroll={false}
-                                onClick={() => {
-                                    scrollToSection('#about');
-                                    setMenuOpen(false);
-                                }}
-                            >
-                                About
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href=""
-                                scroll={false}
-                                onClick={() => {
-                                    scrollToSection("#projects")
-                                    setMenuOpen(false);
-                                }}
-                            >
-                                Projects
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href=""
-                                scroll={false}
-                                onClick={() => {
-                                    scrollToSection('#skills');
-                                    setMenuOpen(false);
-                                }}
-                            >
-                                Skills
-                            </Link>
-                        </li>
+
+                    <ul className={`navbar-list ${bebasNeue.className}`}>
+                        {navItems.map(({ label, selector, offset }) => (
+                            <li key={label}>
+                                <button
+                                    className="navbar-button"
+                                    onClick={() => {
+                                        scrollToSection(selector, offset, scrolled);
+                                        setMenuOpenAction(false);
+                                    }}
+                                >
+                                    {label}
+                                </button>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>

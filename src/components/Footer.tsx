@@ -1,23 +1,40 @@
 import Link from "next/link";
 import Image from "next/image";
 
+const socialLinks = [
+    {
+        href: "https://github.com/rorsman",
+        src: "/github-mark-white.svg",
+        alt: "github logo",
+    },
+    {
+        href: "https://linkedin.com/in/albin-rorsman-6156abb0/",
+        src: "/linkedin-round-white.svg",
+        alt: "linkedin logo",
+    },
+];
+
 export default function Footer() {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
     return (
-        <div className="flex justify-center gap-6 py-6">
-            <Link href="https://github.com/rorsman" target="_blank" rel="noopener noreferrer">
-                <Image
-                    className="h-12 rounded-full"
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/github-mark-white.svg`}
-                    alt="github logo"
-                />
-            </Link>
-            <Link href="https://linkedin.com/in/albin-rorsman-6156abb0/" target="_blank" rel="noopener noreferrer">
-                <Image
-                    className="h-12 rounded-full"
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/linkedin-round-white.svg`}
-                    alt="linkedin logo"
-                />
-            </Link>
+        <div className="footer">
+            {socialLinks.map(({href, src, alt}) => (
+                <Link
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Image
+                        className="footer-icon"
+                        src={basePath + src}
+                        alt={alt}
+                        width={48}
+                        height={48}
+                    />
+                </Link>
+            ))}
         </div>
     );
 }

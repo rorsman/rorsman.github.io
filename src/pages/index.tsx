@@ -18,7 +18,7 @@ export default function Home() {
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
                 <title>RORSMAN</title>
             </Head>
-            <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} scrolled={scrolled} setScrolled={setScrolled}/>
+            <Navbar menuOpen={menuOpen} setMenuOpenAction={setMenuOpen} scrolled={scrolled} setScrolledAction={setScrolled}/>
             <main
                 className={`transition-all ${menuOpen ? 'duration-400 ease' : 'duration-600 ease-in'} ${!scrolled && menuOpen ? 'mt-48' : ''}`}>
                 <Title/>

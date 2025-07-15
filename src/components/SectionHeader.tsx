@@ -2,9 +2,9 @@ type SectionHeaderProps = {
     children: React.ReactNode;
 };
 
-export default function SectionHeader({ children }: SectionHeaderProps) {
+export default function SectionHeader({ children }: Readonly<SectionHeaderProps>) {
     return (
-        <h2 className="text-xl font-bold text-green-500 border-b border-green-700 mb-4 uppercase tracking-wide">
+        <h2 className="section-header">
             {children}
         </h2>
     );
