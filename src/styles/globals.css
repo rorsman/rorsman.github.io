@@ -147,11 +147,11 @@ h1 {
 }
 
 .title-image {
-  @apply mx-auto h-48 rounded-full;
+  @apply mx-auto h-32 sm:h-40 md:h-48 rounded-full;
 }
 
 .title-heading {
-  @apply text-center text-8xl font-extrabold mt-4;
+  @apply text-center text-4xl sm:text-6xl md:text-8xl font-extrabold mt-4;
 }
 
 .section-header {
