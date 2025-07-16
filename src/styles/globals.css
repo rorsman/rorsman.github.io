@@ -6,48 +6,22 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+  @apply m-0 p-0 font-sans;
   background-color: var(--background);
   color: var(--foreground);
 }
 
 main, .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  @apply max-w-3xl mx-auto px-4
+  @apply flex flex-col items-center justify-center max-w-3xl mx-auto px-4 py-8;
 }
 
 h1 {
-  font-weight: bolder;
-  font-size: 4rem;
-  overflow: auto;
-  text-align: center;
+  @apply font-extrabold text-6xl text-center overflow-auto;
   text-overflow: ellipsis;
 }
 
 .terminal-box {
   @apply bg-black text-green-500 font-mono p-4 rounded mb-14 w-full max-w-3xl mx-auto;
-}
-
-.navbar-button {
-  @apply text-white cursor-pointer;
-}
-
-.navbar-button:hover {
-  text-shadow:
-    1px 1px 0 green,
-    -1px -1px 0 green,
-    1px -1px 0 green,
-    -1px 1px 0 green;
-}
-
-.navbar-list {
-  @apply flex flex-col items-end gap-2 px-4 pb-4 text-3xl;
 }
 
 .navbar {
@@ -56,15 +30,12 @@ h1 {
 }
 
 .navbar-open {
-  transition-duration: 100ms;
-  transition-timing-function: linear;
+  transition: all 100ms linear;
 }
 
 .navbar-closed {
-  transition-duration: 700ms;
-  transition-timing-function: ease-in;
+  transition: all 700ms ease-in;
 }
-
 
 .navbar-scrolled {
   @apply bg-green-500;
@@ -79,9 +50,8 @@ h1 {
 }
 
 .navbar-inner {
-  @apply w-full;
+  @apply w-full overflow-hidden;
   transition: all 0.5s ease;
-  overflow: hidden;
 }
 
 .navbar-toggle {
@@ -92,12 +62,32 @@ h1 {
   @apply text-2xl;
 }
 
+.navbar-list {
+  @apply flex flex-col items-end gap-2 px-4 pb-4 text-3xl;
+}
+
+.navbar-button {
+  @apply text-white cursor-pointer;
+}
+
+.navbar-button:hover {
+  text-shadow:
+          1px 1px 0 green,
+          -1px -1px 0 green,
+          1px -1px 0 green,
+          -1px 1px 0 green;
+}
+
+.error-message, .repo-command-line {
+  @apply flex items-center gap-2 font-mono;
+}
+
 .error-message {
-  @apply flex items-center gap-2 text-red-500 font-mono;
+  @apply text-red-500;
 }
 
 .repo-command-line {
-  @apply flex items-center gap-2 mb-2 font-mono;
+  @apply mb-2;
 }
 
 .repo-entry {
