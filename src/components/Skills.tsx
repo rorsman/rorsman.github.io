@@ -7,13 +7,12 @@ import {
 import {
     SiGo, SiTypescript, SiTerraform, SiMqtt,
     SiApachekafka, SiRedis, SiJunit5,
-    SiIntellijidea, SiPostman
+    SiIntellijidea, SiPostman, SiEclipsevertdotx
 } from "react-icons/si";
 import {TbSql, TbBrandMysql} from "react-icons/tb";
 import {BiLogoPostgresql} from "react-icons/bi";
 import {RiJavaLine} from "react-icons/ri";
 import {VscTerminalLinux} from "react-icons/vsc";
-import VertxIcon from "@/icons/vertx-icon.svg";
 import GrpcIcon from "@/icons/grpc-icon.svg";
 
 const iconSize = 18;
@@ -52,7 +51,7 @@ const sections: Section[] = [
     {
         title: "frameworks.txt",
         items: [
-            {name: "Vert.x (Java)", icon: <VertxIcon style={{width: iconSize, height: iconSize}}/>},
+            {name: "Vert.x (Java)", icon: <SiEclipsevertdotx />},
             {name: "Spock (Test)", icon: <FaHandSpock/>},
             {name: "JUnit (Test)", icon: <SiJunit5/>}
         ]
