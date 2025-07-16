@@ -1,7 +1,7 @@
 import React, {JSX} from "react";
 import SectionHeader from "@/components/SectionHeader";
 import {
-    FaPython, FaAws, FaBitbucket, FaGithub, FaCircle,
+    FaPython, FaAws, FaBitbucket, FaGithub,
     FaHandSpock, FaApple
 } from "react-icons/fa";
 import {
@@ -14,6 +14,7 @@ import {BiLogoPostgresql} from "react-icons/bi";
 import {RiJavaLine} from "react-icons/ri";
 import {VscTerminalLinux} from "react-icons/vsc";
 import VertxIcon from "@/icons/vertx-icon.svg";
+import GrpcIcon from "@/icons/grpc-icon.svg";
 
 const iconSize = 18;
 const iconColor = "lightgray";
@@ -45,7 +46,7 @@ const sections: Section[] = [
         items: [
             {name: "MQTT", icon: <SiMqtt/>},
             {name: "Kafka", icon: <SiApachekafka/>},
-            {name: "gRPC", icon: <FaCircle/>}
+            {name: "gRPC", icon: <GrpcIcon style={{height: iconSize}}/>}
         ]
     },
     {
