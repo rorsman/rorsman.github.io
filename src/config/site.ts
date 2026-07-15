@@ -1,6 +1,8 @@
-const productionBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/rorsman.github.io";
+// User sites are served from the domain root. Set NEXT_PUBLIC_BASE_PATH only
+// when deploying this app as a project site under a repository path.
+const productionBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-// GitHub Pages needs a repository prefix, while local development runs at `/`.
+// Project sites need a repository prefix, while this user site runs at `/`.
 export const SITE_BASE_PATH = process.env.NODE_ENV === "development" ? "" : productionBasePath;
 
 export function withBasePath(path: string) {
