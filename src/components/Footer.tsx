@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import { withBasePath } from "@/config/site";
 
 const socialLinks = [
     {
@@ -15,12 +15,10 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-
     return (
-        <div className="footer">
+        <footer className="footer">
             {socialLinks.map(({href, src, alt}) => (
-                <Link
+                <a
                     key={href}
                     href={href}
                     target="_blank"
@@ -28,13 +26,13 @@ export default function Footer() {
                 >
                     <Image
                         className="footer-icon"
-                        src={basePath + src}
+                        src={withBasePath(src)}
                         alt={alt}
                         width={48}
                         height={48}
                     />
-                </Link>
+                </a>
             ))}
-        </div>
+        </footer>
     );
 }

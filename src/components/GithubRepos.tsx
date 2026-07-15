@@ -1,56 +1,16 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { FaGitAlt } from 'react-icons/fa';
-import { TbFaceIdError } from 'react-icons/tb';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import SectionHeader from '@/components/SectionHeader';
-
-type Repo = {
-    id: number;
-    name: string;
-    html_url: string;
-    description: string;
-};
+import { FaGitAlt } from "react-icons/fa";
+import { TbFaceIdError } from "react-icons/tb";
+import SectionHeader from "@/components/SectionHeader";
+import type { Repo } from "@/lib/github";
 
 type Props = {
-    username: string;
+    repos: Repo[];
+    error: boolean;
 };
 
-export default function GithubRepos({ username }: Readonly<Props>) {
-    const [repos, setRepos] = useState<Repo[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-
-    useEffect(() => {
-        async function fetchRepos() {
-            try {
-                const res = await fetch(`https://api.github.com/users/${username}/repos`);
-                if (!res.ok) throw new Error(`Status: ${res.status}`);
-                const data = await res.json();
-                setRepos(data);
-            } catch (err) {
-                console.error("Repo fetch error:", err);
-                setError(true);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchRepos();
-    }, [username]);
-
-    if (loading) {
-        return (
-            <div className="terminal-box">
-                <SectionHeader>Projects</SectionHeader>
-                <LoadingSpinner />
-            </div>
-        );
-    }
-
+export default function GithubRepos({ repos, error }: Readonly<Props>) {
     return (
-        <div className="terminal-box" id="projects">
+        <section className="terminal-box" id="projects">
             <SectionHeader>Projects</SectionHeader>
 
             <div className="repo-command-line">
@@ -60,28 +20,28 @@ export default function GithubRepos({ username }: Readonly<Props>) {
             </div>
 
             {error ? (
-                <div className="error-message">
+                <div className="error-message" role="alert">
                     <TbFaceIdError size={24} />
                     <span>Failed to load projects. Please try again later.</span>
                 </div>
             ) : (
-                repos.map(({ id, name, html_url, description }) => (
+                repos.map(({ id, name, url, description }) => (
                     <div key={id} className="repo-entry">
-                        <FaGitAlt size={24} color="white" />
+                        <FaGitAlt size={24} color="white" aria-hidden="true" />
                         <p>
                             <a
-                                href={html_url}
+                                href={url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="repo-link"
                             >
                                 {name}
                             </a>
-                            {description ? ` - ${description}` : ''}
+                            {description ? ` - ${description}` : ""}
                         </p>
                     </div>
                 ))
             )}
-        </div>
+        </section>
     );
 }

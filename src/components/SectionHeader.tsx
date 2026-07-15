@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
+
 type SectionHeaderProps = {
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
 export default function SectionHeader({ children }: Readonly<SectionHeaderProps>) {

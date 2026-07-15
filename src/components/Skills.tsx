@@ -1,4 +1,4 @@
-import React, {JSX} from "react";
+import type { IconType } from "react-icons";
 import SectionHeader from "@/components/SectionHeader";
 import {
     FaPython, FaAws, FaBitbucket, FaGithub,
@@ -13,96 +13,96 @@ import {TbSql, TbBrandMysql} from "react-icons/tb";
 import {BiLogoPostgresql} from "react-icons/bi";
 import {RiJavaLine} from "react-icons/ri";
 import {VscTerminalLinux} from "react-icons/vsc";
-import GrpcIcon from "@/icons/grpc-icon.svg";
+import GrpcIcon from "@/icons/GrpcIcon";
 
 const iconSize = 18;
 const iconColor = "lightgray";
 const prefix = "➜ ~ cat skills/";
 
-type SkillItem = { name: string; icon: JSX.Element };
+type SkillItem = { name: string; icon: IconType };
 type Section = { title: string; items: SkillItem[] };
 
 const sections: Section[] = [
     {
         title: "languages.txt",
         items: [
-            {name: "Java", icon: <RiJavaLine/>},
-            {name: "Python", icon: <FaPython/>},
-            {name: "Go", icon: <SiGo/>},
-            {name: "Typescript", icon: <SiTypescript/>},
-            {name: "SQL", icon: <TbSql/>}
+            {name: "Java", icon: RiJavaLine},
+            {name: "Python", icon: FaPython},
+            {name: "Go", icon: SiGo},
+            {name: "Typescript", icon: SiTypescript},
+            {name: "SQL", icon: TbSql}
         ]
     },
     {
         title: "cloud-infrastructure.txt",
         items: [
-            {name: "AWS", icon: <FaAws/>},
-            {name: "Terraform", icon: <SiTerraform/>}
+            {name: "AWS", icon: FaAws},
+            {name: "Terraform", icon: SiTerraform}
         ]
     },
     {
         title: "messaging-systems.txt",
         items: [
-            {name: "MQTT", icon: <SiMqtt/>},
-            {name: "Kafka", icon: <SiApachekafka/>},
-            {name: "gRPC", icon: <GrpcIcon style={{height: iconSize}}/>}
+            {name: "MQTT", icon: SiMqtt},
+            {name: "Kafka", icon: SiApachekafka},
+            {name: "gRPC", icon: GrpcIcon}
         ]
     },
     {
         title: "frameworks.txt",
         items: [
-            {name: "Vert.x (Java)", icon: <SiEclipsevertdotx />},
-            {name: "Spock (Test)", icon: <FaHandSpock/>},
-            {name: "JUnit (Test)", icon: <SiJunit5/>}
+            {name: "Vert.x (Java)", icon: SiEclipsevertdotx},
+            {name: "Spock (Test)", icon: FaHandSpock},
+            {name: "JUnit (Test)", icon: SiJunit5}
         ]
     },
     {
         title: "databases.txt",
         items: [
-            {name: "PostgreSQL", icon: <BiLogoPostgresql/>},
-            {name: "MySQL", icon: <TbBrandMysql/>},
-            {name: "Redis", icon: <SiRedis/>}
+            {name: "PostgreSQL", icon: BiLogoPostgresql},
+            {name: "MySQL", icon: TbBrandMysql},
+            {name: "Redis", icon: SiRedis}
         ]
     },
     {
         title: "os.txt",
         items: [
-            {name: "macOS", icon: <FaApple/>},
-            {name: "Linux", icon: <VscTerminalLinux/>}
+            {name: "macOS", icon: FaApple},
+            {name: "Linux", icon: VscTerminalLinux}
         ]
     },
     {
         title: "tools.txt",
         items: [
-            {name: "GitHub", icon: <FaGithub/>},
-            {name: "BitBucket", icon: <FaBitbucket/>},
-            {name: "IntelliJ", icon: <SiIntellijidea/>},
-            {name: "Postman", icon: <SiPostman/>}
+            {name: "GitHub", icon: FaGithub},
+            {name: "BitBucket", icon: FaBitbucket},
+            {name: "IntelliJ", icon: SiIntellijidea},
+            {name: "Postman", icon: SiPostman}
         ]
     }
 ];
 
-const SkillSection: React.FC<Section> = ({title, items}) => (
-    <div className="skill-section">
+const SkillSection = ({title, items}: Section) => (
+    <section className="skill-section">
         <p className="skill-section-title">{prefix + title}</p>
         <div className="skill-grid">
-            {items.map(({name, icon}) => (
+            {items.map(({name, icon: Icon}) => (
                 <div key={name} className="skill-item">
-                    {React.cloneElement(icon, {color: iconColor, size: iconSize})}
+                    <Icon color={iconColor} size={iconSize} aria-hidden="true" />
                     <span className="skill-name">{name}</span>
                 </div>
             ))}
         </div>
-    </div>
+    </section>
 );
 
 export default function Skills() {
     return (
-        <div className="terminal-box" id="skills">
+        <section className="terminal-box" id="skills">
             <SectionHeader>Skills</SectionHeader>
             {sections.map((section) => (
                 <SkillSection key={section.title} {...section} />
             ))}
-        </div>
+        </section>
     );
 }

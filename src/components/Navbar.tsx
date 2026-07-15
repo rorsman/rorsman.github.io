@@ -1,13 +1,12 @@
 'use client';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { Bebas_Neue } from 'next/font/google';
 
-const DEFAULT_OFFSET = -80;
-
 const navItems = [
-    { label: 'About', selector: '#about', offset: DEFAULT_OFFSET - 200 },
-    { label: 'Projects', selector: '#projects', offset: DEFAULT_OFFSET },
-    { label: 'Skills', selector: '#skills', offset: DEFAULT_OFFSET },
+    { label: 'About', href: '#about' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Skills', href: '#skills' },
 ];
 
 const bebasNeue = Bebas_Neue({
@@ -18,20 +17,10 @@ const bebasNeue = Bebas_Neue({
 
 interface NavbarProps {
     menuOpen: boolean;
-    setMenuOpenAction: React.Dispatch<React.SetStateAction<boolean>>;
+    setMenuOpenAction: Dispatch<SetStateAction<boolean>>;
     scrolled: boolean;
-    setScrolledAction: React.Dispatch<React.SetStateAction<boolean>>;
+    setScrolledAction: Dispatch<SetStateAction<boolean>>;
 }
-
-const scrollToSection = (selector: string, offset: number, scrolled: boolean) => {
-    const section = document.querySelector<HTMLElement>(selector);
-    if (!section) return;
-
-    const adjustedOffset = scrolled ? DEFAULT_OFFSET : offset;
-    const targetY = section.offsetTop + adjustedOffset;
-
-    window.scrollTo({ top: Math.max(targetY, 0), behavior: 'smooth' });
-};
 
 export default function Navbar({
                                    menuOpen,
@@ -39,57 +28,56 @@ export default function Navbar({
                                    scrolled,
                                    setScrolledAction,
                                }: Readonly<NavbarProps>) {
-useEffect(() => {
-    const handleScroll = () => setScrolledAction(window.scrollY > 50);
-    const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-            setMenuOpenAction(false);
-        }
-    };
+    useEffect(() => {
+        const handleScroll = () => setScrolledAction(window.scrollY > 50);
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setMenuOpenAction(false);
+        };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('keydown', handleKeyDown);
+        handleScroll();
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('keydown', handleKeyDown);
 
-    return () => {
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('keydown', handleKeyDown);
-    };
-}, [setScrolledAction, setMenuOpenAction]);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [setScrolledAction, setMenuOpenAction]);
 
     const navbarClasses = [
         'navbar',
-        menuOpen ? 'navbar-open' : 'navbar-closed',
         scrolled || menuOpen ? 'navbar-scrolled' : 'navbar-transparent',
     ].join(' ');
 
     return (
-        <nav className={navbarClasses}>
+        <nav className={navbarClasses} aria-label="Main navigation">
             <div className="navbar-container">
                 <div
-                    className="navbar-inner"
-                    style={{ maxHeight: menuOpen ? '500px' : '3rem' }}
+                    className={`navbar-inner ${menuOpen ? 'navbar-inner-open' : 'navbar-inner-closed'}`}
                 >
                     <div className="navbar-toggle">
                         <button
+                            type="button"
                             className="navbar-toggle-button"
                             onClick={() => setMenuOpenAction(!menuOpen)}
+                            aria-expanded={menuOpen}
+                            aria-controls="navigation-menu"
+                            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
                         >
                             {menuOpen ? '✕' : '☰'}
                         </button>
                     </div>
 
-                    <ul className={`navbar-list ${bebasNeue.className}`}>
-                        {navItems.map(({ label, selector, offset }) => (
+                    <ul id="navigation-menu" className={`navbar-list ${bebasNeue.className}`}>
+                        {navItems.map(({ label, href }) => (
                             <li key={label}>
-                                <button
+                                <a
+                                    href={href}
                                     className="navbar-button"
-                                    onClick={() => {
-                                        scrollToSection(selector, offset, scrolled);
-                                        setMenuOpenAction(false);
-                                    }}
+                                    onClick={() => setMenuOpenAction(false)}
                                 >
                                     {label}
-                                </button>
+                                </a>
                             </li>
                         ))}
                     </ul>
