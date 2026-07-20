@@ -1,21 +1,27 @@
-import Image from "next/image";
-import { Sixtyfour } from "next/font/google";
-import { withBasePath } from "@/config/site";
-
-const sixtyFour = Sixtyfour({
-    subsets: ["latin"],
-    fallback: ["sans"]
-});
+const socialLinks = [
+    { href: "https://github.com/rorsman", label: "GitHub" },
+    { href: "https://linkedin.com/in/albin-rorsman-6156abb0/", label: "LinkedIn" },
+];
 
 export default function Title() {
-    return <div className="title-container">
-        <Image
-            className="title-image"
-            src={withBasePath("/terminal.svg")}
-            alt=""
-            width={192}
-            height={192}
-        />
-        <h1 className={`${sixtyFour.className} title-heading`}>I WRITE CODE</h1>
-    </div>
-};
+    return (
+        <div className="title-container">
+            <h1 className="title-heading">
+                I WRITE<br />CODE<span className="title-cursor">_</span>
+            </h1>
+            <div className="title-contact-links">
+                {socialLinks.map(({href, label}) => (
+                    <a
+                        key={href}
+                        className="title-contact-link"
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {label}
+                    </a>
+                ))}
+            </div>
+        </div>
+    );
+}

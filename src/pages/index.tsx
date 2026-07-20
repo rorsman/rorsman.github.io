@@ -2,7 +2,6 @@ import Head from 'next/head';
 import type { GetStaticProps } from 'next';
 import {useState} from 'react';
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Title from "@/components/Title";
 import About from "@/components/About";
 import GithubRepos from "@/components/GithubRepos";
@@ -46,13 +45,11 @@ export default function Home({ repos, reposError }: Readonly<HomeProps>) {
                 <title>RORSMAN</title>
             </Head>
             <Navbar menuOpen={menuOpen} setMenuOpenAction={setMenuOpen} scrolled={scrolled} setScrolledAction={setScrolled}/>
-            <main
-                className={`transition-all ${menuOpen ? 'duration-400 ease' : 'duration-600 ease-in'} ${!scrolled && menuOpen ? 'mt-48' : ''}`}>
+            <main>
                 <Title/>
                 <About/>
                 <GithubRepos repos={repos} error={reposError}/>
                 <Skills/>
-                <Footer/>
                 <BackToTopButton scrolled={scrolled}/>
             </main>
         </>

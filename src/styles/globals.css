@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #171717;
-  --foreground: #ffffff;
+  --background: #07100c;
+  --panel: #0b1711;
+  --panel-highlight: #102319;
+  --line: #1e613d;
+  --terminal: #56f28a;
+  --muted: #79a98a;
+  --heading: #e7ffed;
+  --warning: #f2d477;
+  --error: #ff7b72;
+  --foreground: var(--heading);
 }
 
 body {
@@ -19,13 +27,11 @@ section {
   scroll-margin-top: 5rem;
 }
 
-.title-heading {
-  @apply font-extrabold text-6xl text-center overflow-auto;
-  text-overflow: ellipsis;
-}
-
 .terminal-box {
-  @apply bg-black text-green-500 font-mono p-4 rounded-xl mb-14 w-full max-w-3xl mx-auto border-2 border-green-500;
+  @apply font-mono p-4 rounded-xl mb-14 w-full max-w-3xl mx-auto border-2;
+  background-color: var(--panel);
+  border-color: var(--line);
+  color: var(--terminal);
 }
 
 .navbar {
@@ -34,7 +40,7 @@ section {
 }
 
 .navbar-scrolled {
-  @apply bg-green-500;
+  background-color: var(--panel-highlight);
 }
 
 .navbar-transparent {
@@ -71,23 +77,36 @@ section {
 }
 
 .navbar-button {
-  @apply text-white cursor-pointer;
+  @apply cursor-pointer;
+  color: var(--heading);
 }
 
 .navbar-button:hover {
   text-shadow:
-          1px 1px 0 green,
-          -1px -1px 0 green,
-          1px -1px 0 green,
-          -1px 1px 0 green;
+          1px 1px 0 var(--terminal),
+          -1px -1px 0 var(--terminal),
+          1px -1px 0 var(--terminal),
+          -1px 1px 0 var(--terminal);
 }
 
 .error-message, .repo-command-line {
   @apply flex items-center gap-2 font-mono;
 }
 
+.terminal-command {
+  background-color: var(--panel-highlight);
+  color: var(--terminal);
+  margin-bottom: 0.5em;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+.terminal-command svg {
+  color: var(--terminal);
+}
+
 .error-message {
-  @apply text-red-500;
+  color: var(--error);
 }
 
 .repo-command-line {
@@ -100,6 +119,7 @@ section {
 
 .repo-link {
   @apply hover:underline font-bold;
+  color: var(--terminal);
 }
 
 .skill-section {
@@ -123,41 +143,59 @@ section {
 }
 
 .back-to-top-button {
-  @apply fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-lg;
+  @apply fixed bottom-6 right-6 z-50 font-bold py-2 px-4 rounded-full shadow-lg;
+  background-color: var(--terminal);
+  color: var(--background);
+}
+
+.back-to-top-button:hover {
+  background-color: var(--line);
 }
 
 .back-to-top-button-label {
   @apply inline-flex items-center gap-1;
 }
 
-.footer {
-  @apply flex justify-center gap-6 py-6;
+.title-contact-links {
+  @apply mt-5 flex justify-center;
 }
 
-.footer-icon {
-  @apply h-12 rounded-full border-2 border-transparent hover:border-green-500;
+.title-contact-link {
+  @apply text-xs sm:text-sm;
+  color: var(--muted);
 }
 
-.loading-spinner {
-  @apply flex items-center justify-center h-32;
+.title-contact-link:hover,
+.title-contact-link:focus-visible {
+  color: var(--terminal);
+  @apply underline;
 }
 
-.loading-spinner-icon {
-  @apply w-8 h-8 animate-spin text-gray-200 dark:text-gray-600 fill-green-500;
+.title-contact-link + .title-contact-link::before {
+  content: "·";
+  display: inline-block;
+  margin: 0 0.75rem;
+  color: var(--muted);
+  text-decoration: none;
 }
 
 .title-container {
   @apply mb-14;
 }
 
-.title-image {
-  @apply mx-auto h-32 sm:h-40 md:h-48 rounded-full;
+.title-heading {
+  @apply text-center text-4xl font-extrabold leading-[.88] tracking-[-.08em] sm:text-6xl md:text-8xl;
+  color: var(--heading);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
-.title-heading {
-  @apply text-center text-4xl sm:text-6xl md:text-8xl font-extrabold mt-4;
+.title-cursor {
+  color: var(--terminal);
+  font-weight: 500;
 }
 
 .section-header {
-  @apply text-xl font-bold text-green-500 border-b border-green-700 mb-4 uppercase tracking-wide;
+  @apply text-xl font-bold border-b mb-4 uppercase tracking-wide;
+  border-color: var(--line);
+  color: var(--terminal);
 }

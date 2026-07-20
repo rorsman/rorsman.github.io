@@ -16,7 +16,7 @@ import {VscTerminalLinux} from "react-icons/vsc";
 import GrpcIcon from "@/icons/GrpcIcon";
 
 const iconSize = 18;
-const iconColor = "lightgray";
+const iconColor = "var(--muted)";
 const prefix = "➜ ~ cat skills/";
 
 type SkillItem = { name: string; icon: IconType };
@@ -84,7 +84,7 @@ const sections: Section[] = [
 
 const SkillSection = ({title, items}: Section) => (
     <section className="skill-section">
-        <p className="skill-section-title">{prefix + title}</p>
+        <p className="terminal-command skill-section-title">{prefix + title}</p>
         <div className="skill-grid">
             {items.map(({name, icon: Icon}) => (
                 <div key={name} className="skill-item">

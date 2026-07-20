@@ -1,6 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, MouseEvent, SetStateAction } from 'react';
 import { Bebas_Neue } from 'next/font/google';
 
 const navItems = [
@@ -14,6 +14,23 @@ const bebasNeue = Bebas_Neue({
     subsets: ['latin'],
     fallback: ['sans'],
 });
+
+function scrollToSection(
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+    closeMenu: Dispatch<SetStateAction<boolean>>,
+) {
+    event.preventDefault();
+    closeMenu(false);
+
+    window.requestAnimationFrame(() => {
+        document.querySelector<HTMLElement>(href)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+        window.history.replaceState(null, '', href);
+    });
+}
 
 interface NavbarProps {
     menuOpen: boolean;
@@ -74,7 +91,7 @@ export default function Navbar({
                                 <a
                                     href={href}
                                     className="navbar-button"
-                                    onClick={() => setMenuOpenAction(false)}
+                                    onClick={(event) => scrollToSection(event, href, setMenuOpenAction)}
                                 >
                                     {label}
                                 </a>

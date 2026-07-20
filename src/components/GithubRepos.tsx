@@ -13,7 +13,7 @@ export default function GithubRepos({ repos, error }: Readonly<Props>) {
         <section className="terminal-box" id="projects">
             <SectionHeader>Projects</SectionHeader>
 
-            <div className="repo-command-line">
+            <div className="terminal-command repo-command-line">
                 <span>{'➜ ~ ls -l github.com/rorsman | awk \'{print "'}</span>
                 <FaGitAlt className="inline" size={16} />
                 <span>{'" $9 " - " $10}\''}</span>
@@ -27,7 +27,7 @@ export default function GithubRepos({ repos, error }: Readonly<Props>) {
             ) : (
                 repos.map(({ id, name, url, description }) => (
                     <div key={id} className="repo-entry">
-                        <FaGitAlt size={24} color="white" aria-hidden="true" />
+                        <FaGitAlt size={24} color="var(--terminal)" aria-hidden="true" />
                         <p>
                             <a
                                 href={url}
